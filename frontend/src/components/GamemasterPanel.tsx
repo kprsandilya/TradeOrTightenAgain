@@ -145,18 +145,34 @@ export function GamemasterPanel({ onClose }: Props) {
 					{/* Stage */}
 					<section>
 						<h3 className="text-sm font-medium text-slate-400 mb-2">Stage</h3>
+						{!state.round && state.allMarketsComplete && state.currentMarketIndex < state.markets.length && (
+							<div className="mb-2 rounded-lg bg-amber-950/40 border border-amber-700/50 p-2">
+								<p className="text-xs text-amber-200 mb-2">
+									More markets are available. Start the next market to continue playing.
+								</p>
+								<button
+									type="button"
+									onClick={gmNextStage}
+									className="rounded-lg bg-amber-600 hover:bg-amber-500 px-3 py-2 text-sm font-medium text-white"
+								>
+									Start next market →
+								</button>
+							</div>
+						)}
 						<div className="flex gap-2">
 							<button
 								type="button"
 								onClick={gmPrevStage}
-								className="rounded-lg bg-slate-700 hover:bg-slate-600 px-3 py-2 text-sm font-medium"
+								disabled={!state.round}
+								className="rounded-lg bg-slate-700 hover:bg-slate-600 disabled:opacity-50 px-3 py-2 text-sm font-medium"
 							>
 								← Previous
 							</button>
 							<button
 								type="button"
 								onClick={gmNextStage}
-								className="rounded-lg bg-slate-700 hover:bg-slate-600 px-3 py-2 text-sm font-medium"
+								disabled={!state.round && !(state.allMarketsComplete && state.currentMarketIndex < state.markets.length)}
+								className="rounded-lg bg-slate-700 hover:bg-slate-600 disabled:opacity-50 px-3 py-2 text-sm font-medium"
 							>
 								Next →
 							</button>

@@ -153,9 +153,11 @@ export function GameScreen() {
 						{state.allMarketsComplete && (
 							<div className="mt-2 rounded bg-amber-950/50 border border-amber-700/50 text-amber-200 text-sm px-2 py-1.5">
 								All markets complete.
-								{!state.pnlFinalized
-									? " Gamemaster must finalize P&L before ending the game."
-									: " P&L finalized. Gamemaster may end the game."}
+								{state.currentMarketIndex < state.markets.length
+									? " More markets available — open Gamemaster panel and click “Start next market” to continue."
+									: !state.pnlFinalized
+										? " Gamemaster must finalize P&L before ending the game."
+										: " P&L finalized. Gamemaster may end the game."}
 							</div>
 						)}
 					</div>
@@ -165,7 +167,11 @@ export function GameScreen() {
 						<h3 className="text-sm font-medium text-slate-400 mb-3">Actions</h3>
 						{state.allMarketsComplete ? (
 							<p className="text-slate-500">
-								All markets have concluded. {state.pnlFinalized ? "P&L has been finalized. The gamemaster may end the game." : "Waiting for the gamemaster to finalize P&L before the game can end."}
+								{state.currentMarketIndex < state.markets.length
+									? "More markets are available. Open the Gamemaster panel and click “Start next market” to play the next underlying asset."
+									: state.pnlFinalized
+										? "P&L has been finalized. The gamemaster may end the game."
+										: "Waiting for the gamemaster to finalize P&L before the game can end."}
 							</p>
 						) : isGamemaster ? (
 							<p className="text-slate-500">
