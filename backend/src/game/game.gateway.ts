@@ -41,7 +41,10 @@ interface SocketData {
 }
 
 @WebSocketGateway({
-  cors: { origin: '*' },
+  cors: {
+    origin: process.env.CORS_ORIGIN?.split(',').map((o) => o.trim()) || '*',
+    credentials: true,
+  },
   namespace: '/',
 })
 export class GameGateway implements OnGatewayConnection, OnGatewayDisconnect {
