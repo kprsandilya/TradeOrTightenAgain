@@ -128,14 +128,14 @@ The frontend must connect to this URL (see **VITE_WS_URL** below).
 
 ### Option A: Amplify Hosting (recommended)
 
+The repo includes an **`amplify.yml`** at the root that tells Amplify to build the app in the `frontend/` directory. You do not need to set Root directory manually when this file is present.
+
 1. **Connect repository**  
    - Amplify Console → **New app** → **Host web app** → connect your Git provider and repo.
 
 2. **Build settings**  
-   - App: **Monorepo** (or single app); set **Root directory** to `frontend` if the app is in a subfolder.  
-   - Build:  
-     - **Build command**: `pnpm install && pnpm run build` (or `npm ci && npm run build`).  
-     - **Output directory**: `dist`.
+   - Amplify will use the existing **`amplify.yml`** (app root: `frontend`, build: `pnpm install` + `pnpm run build`, artifacts: `dist`).  
+   - If you override in the Console, use **Build command**: `pnpm install && pnpm run build` and **Output directory**: `dist`; set **Root directory** to `frontend` if using a single-app (non-monorepo) configuration.
 
 3. **Environment variables** (Amplify → App → Environment variables):
 

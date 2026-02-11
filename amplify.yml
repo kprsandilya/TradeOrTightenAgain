@@ -1,0 +1,21 @@
+# AWS Amplify build spec. Builds the frontend app from the frontend/ directory.
+# See docs/DEPLOYMENT.md for env vars (VITE_AMPLIFY_*, VITE_WS_URL).
+version: 1
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - corepack enable
+            - pnpm install
+        build:
+          commands:
+            - pnpm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - frontend/node_modules/**/*
