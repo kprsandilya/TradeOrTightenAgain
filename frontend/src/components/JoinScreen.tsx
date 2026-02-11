@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useGame } from "../context/GameContext";
+import { useAuth } from "../context/AuthContext";
 
 export function JoinScreen() {
 	const { connected, createGame, joinGame, error, gameCode } = useGame();
+	const auth = useAuth();
 	const [mode, setMode] = useState<"join" | "create">("join");
 	const [code, setCode] = useState("");
-	const [name, setName] = useState("");
+	const [name, setName] = useState(auth?.user?.displayName ?? "");
 	const [secret, setSecret] = useState("");
 	const [createSecret, setCreateSecret] = useState("");
 	const [spreadSec, setSpreadSec] = useState(60);
@@ -37,6 +39,17 @@ export function JoinScreen() {
 		<div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6">
 			<div className="w-full max-w-md space-y-8">
 				<div className="text-center">
+					<div className="flex justify-end mb-2">
+						{auth && (
+							<button
+								type="button"
+								onClick={auth.signOut}
+								className="text-sm text-slate-500 hover:text-red-400"
+							>
+								Sign out
+							</button>
+						)}
+					</div>
 					<h1 className="text-3xl font-bold tracking-tight text-emerald-400">Trade or Tighten</h1>
 					<p className="mt-2 text-slate-400">Real-time multiplayer market-making game</p>
 				</div>

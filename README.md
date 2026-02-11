@@ -22,7 +22,9 @@ pnpm install
 pnpm run dev
 ```
 
-Open **http://localhost:5173**. The dev server proxies `/socket.io` to the backend.
+Open **http://localhost:5173**. It connects to the backend at `http://localhost:3000` in dev.
+
+**Optional – login (AWS Amplify):** To require sign-in before playing, create a Cognito User Pool and set `VITE_AMPLIFY_USER_POOL_ID`, `VITE_AMPLIFY_USER_POOL_CLIENT_ID`, and `VITE_AMPLIFY_REGION` in `.env` (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)). If these are not set, the app runs without login.
 
 ### Play
 
@@ -40,7 +42,7 @@ Open **http://localhost:5173**. The dev server proxies `/socket.io` to the backe
 
 Full description of gamemaster controls, round flow, and WebSocket events: **[docs/GAMEMASTER.md](docs/GAMEMASTER.md)**.
 
-## Optional
+## Auth and deployment
 
-- **Auth / persistence**: Not implemented; optional AWS Amplify integration could add login and saved game history.
-- **Deploy**: Backend can run on Amazon EC2; set CORS and `VITE_WS_URL` (or equivalent) for the frontend to connect to the production WebSocket URL.
+- **Login (AWS Amplify):** The frontend can use Amazon Cognito so users sign in before joining or creating games. Configure via env vars (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)). Without them, the app works without auth (e.g. local dev).
+- **Deploy:** [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) describes hosting the backend on **EC2** (Node, PM2, nginx) and the frontend on **Amplify Hosting** (or S3 + CloudFront), with CORS and `VITE_WS_URL` for production.

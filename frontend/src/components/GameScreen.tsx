@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useGame } from "../context/GameContext";
+import { useAuth } from "../context/AuthContext";
 import { RoundStage } from "../types/game";
 import { OrderBook } from "./OrderBook";
 import { GamemasterPanel } from "./GamemasterPanel";
@@ -27,6 +28,7 @@ export function GameScreen() {
 		submitOrder,
 		leaveGame,
 	} = useGame();
+	const auth = useAuth();
 
 	const [spreadInput, setSpreadInput] = useState("");
 	const [mmBid, setMmBid] = useState("");
@@ -91,6 +93,15 @@ export function GameScreen() {
 					>
 						Leave
 					</button>
+					{auth && (
+						<button
+							type="button"
+							onClick={auth.signOut}
+							className="text-sm text-slate-500 hover:text-red-400"
+						>
+							Sign out
+						</button>
+					)}
 				</div>
 			</header>
 
