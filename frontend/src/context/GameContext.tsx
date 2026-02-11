@@ -60,7 +60,7 @@ interface GameContextValue {
 const GameContext = createContext<GameContextValue | null>(null);
 
 export function GameProvider({ children }: { children: ReactNode }) {
-	const [socket, setSocket] = useState<Socket | null>(null);
+	const [, setSocket] = useState<Socket | null>(null);
 	const [connected, setConnected] = useState(false);
 	const [playerId, setPlayerId] = useState<string | null>(null);
 	const [gameCode, setGameCode] = useState<string | null>(null);

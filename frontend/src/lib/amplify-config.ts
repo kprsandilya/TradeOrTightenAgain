@@ -17,7 +17,7 @@ const region = import.meta.env.VITE_AMPLIFY_REGION as string | undefined;
 export const isAmplifyConfigured =
 	Boolean(userPoolId && userPoolClientId && region);
 
-if (isAmplifyConfigured) {
+if (isAmplifyConfigured && userPoolId && userPoolClientId && region) {
 	Amplify.configure({
 		Auth: {
 			Cognito: {
@@ -41,5 +41,5 @@ if (isAmplifyConfigured) {
 				},
 			},
 		},
-	});
+	} as Parameters<typeof Amplify.configure>[0]);
 }

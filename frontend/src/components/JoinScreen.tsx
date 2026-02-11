@@ -3,7 +3,7 @@ import { useGame } from "../context/GameContext";
 import { useAuth } from "../context/AuthContext";
 
 export function JoinScreen() {
-	const { connected, createGame, joinGame, error, gameCode } = useGame();
+	const { connected, createGame, joinGame, error } = useGame();
 	const auth = useAuth();
 	const [mode, setMode] = useState<"join" | "create">("join");
 	const [code, setCode] = useState("");

@@ -8,13 +8,14 @@ export type MarketId = string;
 export type OrderId = string;
 export type RoundIndex = number;
 
-export enum RoundStage {
-	SPREAD_QUOTING = "SPREAD_QUOTING",
-	MARKET_MAKER_QUOTE = "MARKET_MAKER_QUOTE",
-	FORCED_TRADING = "FORCED_TRADING",
-	OPEN_TRADING = "OPEN_TRADING",
-	ROUND_END = "ROUND_END",
-}
+export const RoundStage = {
+	SPREAD_QUOTING: "SPREAD_QUOTING",
+	MARKET_MAKER_QUOTE: "MARKET_MAKER_QUOTE",
+	FORCED_TRADING: "FORCED_TRADING",
+	OPEN_TRADING: "OPEN_TRADING",
+	ROUND_END: "ROUND_END",
+} as const;
+export type RoundStage = (typeof RoundStage)[keyof typeof RoundStage];
 
 export interface Market {
 	id: MarketId;
@@ -155,3 +156,36 @@ export const ServerEvents = {
 	ERROR: "game:error",
 	GAME_ENDED: "game:ended",
 } as const;
+
+/** Server -> client payloads */
+export interface JoinedPayload {
+	gameCode: GameCode;
+	playerId: PlayerId;
+	isGamemaster: boolean;
+	state: GameState;
+}
+export interface StatePayload {
+	state: GameState;
+}
+export interface StageChangedPayload {
+	stage: RoundStage;
+	round: RoundState;
+}
+export interface SpreadUpdatePayload {
+	bestSpread: number | null;
+	bestSpreadPlayerId: PlayerId | null;
+	submissions: SpreadSubmission[];
+}
+export interface TimerPayload {
+	stage: RoundStage;
+	endsAt: number;
+	secondsRemaining: number;
+}
+export interface TradePayload {
+	trade: Trade;
+}
+export interface AnnouncementPayload {
+	id: string;
+	text: string;
+	at: number;
+}

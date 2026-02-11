@@ -31,23 +31,20 @@ function AppWithAuth() {
 
 	return (
 		<Authenticator>
-			{({
-				signOut,
-				user,
-			}: {
-				signOut: () => void;
-				user: { username?: string; userId?: string; signInDetails?: { loginId?: string }; attributes?: { email?: string } };
-			}) => (
-				<AuthProvider
-					user={{
-						userId: user?.userId ?? user?.username ?? "",
-						displayName: getDisplayNameFromCognitoUser(user ?? {}),
-					}}
-					signOut={signOut}
-				>
-					<GameApp />
-				</AuthProvider>
-			)}
+			{(props) => {
+				const { signOut, user } = props;
+				return (
+					<AuthProvider
+						user={{
+							userId: user?.userId ?? user?.username ?? "",
+							displayName: getDisplayNameFromCognitoUser(user ?? {}),
+						}}
+						signOut={signOut ?? (() => {})}
+					>
+						<GameApp />
+					</AuthProvider>
+				);
+			}}
 		</Authenticator>
 	);
 }
